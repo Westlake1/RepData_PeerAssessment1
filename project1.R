@@ -1,23 +1,12 @@
-Reproducible Research: Peer Assessment 1
-========================================
-```{r setoptions,echo=TRUE}
-```
-**Overview**
+## My R program script for the Reproducible Research course
+## Course Project 1, August, 2015
 
-This project analyzes personal movement data collected with personal monitoring devices like *Fitbit*.  Source data collected in five minutes intervals over a two month period was analyzed. The original data was forked from GitHub and cloned to my pc for processing.  The original data, my R programming code and results are included in this GitHub repository.
 
-## Loading and preprocessing the data
-The source data for this project is the *activity.zip* file located within the *RepData_Assessment1* folder.  Three steps are required to read this file into R Studio.  These steps are:
-
-1. Set the working directory.
-2. Unzip the file.
-3. Read the file into R.
-
-The result of these steps produces a file called *data* which is then processes.  The code to do this is:
-
-```{r}
 # --- set the working directory
 setwd("c:/Users/Owner/ReproducibleResearch1/RepData_PeerAssessment1")
+
+# --- get the working directory to verify it is set correctly
+getwd()
 
 # --- unzip the file
 unzip("c:/Users/Owner/ReproducibleResearch1/RepData_PeerAssessment1/activity.zip", files = NULL, list = FALSE, overwrite = TRUE,
@@ -25,40 +14,36 @@ unzip("c:/Users/Owner/ReproducibleResearch1/RepData_PeerAssessment1/activity.zip
 
 # --- read the file into R
 data = read.table("c:/Users/Owner/ReproducibleResearch1/RepData_PeerAssessment1/activity.csv", header=TRUE, sep = ',')
-```
 
+## -------------------------------------------------
 ## What is mean total number of steps taken per day?
-I first calculate the total number of steps taken per day.  The code to do this is:
-```{r}
+## -------------------------------------------------
 # sum the steps by date
 data1.sum <- aggregate(x = data[c("steps")],
                      FUN = sum,
                      by = list(Group.date = data$date))
-```
 
-Next I made a histogram of the total number of steps taken each day.  The code to do this is:
-```{r}
 # create histogram of the total number of steps taken each day
 hist(as.numeric(data1.sum$steps), 
      main = "Total Number of Steps Taken Each Day", 
      col = "Red")
-```
 
-Finally I calculated the mean and median of the total number of steps taken per day.  The code to do this is:
-```{r}
+# --- copy the plot to a PNG file
+dev.copy(device = png, filename = 'plot1.png', width = 480, height = 480)
+# --- close the PNG device
+dev.off()
+
 # Calculate and report the mean of the total number of steps taken per day
 m <- mean(data1.sum$steps, na.rm = TRUE)
 m
 
 # Calculate and report the median of the total number of steps taken per day
 median(data1.sum$steps, na.rm = TRUE)
-```
-**The mean is 10766.19 and the median is 10765.**
 
+
+## -------------------------------------------
 ## What is the average daily activity pattern?
-To answer this question, I first calculated the average number of steps by interval and then made a time series plot of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis).
-The code to do this is:
-```{r}
+## -------------------------------------------
 # --- summarize the data -- calc the mean steps by interval to data frame mi
 mi = aggregate(data$steps, list(data$interval), na.rm = TRUE, mean)
 
@@ -66,10 +51,11 @@ mi = aggregate(data$steps, list(data$interval), na.rm = TRUE, mean)
 plot(mi$Group.1, mi$x, type ='l',   main = "Average Daily Activity Pattern", col="Red", 
      xlab = "5-minute intervals", ylab = "avg number of steps averaged across all days")
 
-```
+# --- copy the plot to a PNG file
+dev.copy(device = png, filename = 'plot2.png', width = 480, height = 480)
+# --- close the PNG device
+dev.off()
 
-Which 5 minute interval, on average across all the days in the dataset, contains the maximum number of steps?  The code to answer this is:
-```{r}
 # get the largest value of avg number of steps in intervals
 mx <- max(mi$x, na.rm = TRUE)
 mx
@@ -77,22 +63,15 @@ mx
 r <- which(mi$x == mx)
 # get the time interval in the row with the largest number (format is -hmm)
 mi[r,1]
-```
-**8:35 AM is the time interval that contains the maximun of steps.**
 
 
+## -----------------------
 ## Imputing missing values
-There are a number of days and intervals where there are missing values in the data (coded as NA).  In this part of the analysis I filled in those missing values.
-First I calculated the total number of missing values in the dataset (i.e. the total number of rows with NAs).
-```{r}
+## -----------------------
+
 # calculate the total number of missing values in the dataset
 sum(is.na(data$steps))
-```
-**There are 2304 missing values.**
 
-Next I devise a strategy for filling in all of the missing values in the dataset using the **mean for the day divided by the number of intervals per day (288)**. 
-I then create a new dataset that is equal to the original dataset but with the missing data filled in.  I made a histogram of the total number of steps taken each day.  The code is:
-```{r}
 data2 <- as.data.frame(data) # copy the dataset to data2
 # data2[is.na(data2)] <- 0  # replace na with 0
 data2[, 1][is.na(data2[, 1])] <- m/288 # replace na with daily mean / 288 intervals
@@ -105,32 +84,22 @@ data2.sum <- aggregate(x = data2[c("steps")],
 hist(as.numeric(data2.sum$steps), 
      main = "Total Number of Steps Taken Each Day", 
      col = "Red")
-```
 
-The mean and median total number of steps taken per day were recalculated using the filled in data.
-```{r}
+# --- copy the plot to a PNG file
+dev.copy(device = png, filename = 'plot3.png', width = 480, height = 480)
+# --- close the PNG device
+dev.off()
+
 # Calculate and report the mean of the total number of steps taken per day
-mean(data2.sum$steps)
+mean(data2.sum$steps)   #, na.rm = TRUE)
 
 # Calculate and report the median of the total number of steps taken per day
-median(data2.sum$steps)
-```
-**The mean with the filled-in data is 10766.19.  This is the same as the mean without the data.  The median with the filled-in data is 10766.19 versus 10765 which is almost identical.  Using this method of filling in the missing data did not dramically change the results.**
+median(data2.sum$steps) #, na.rm = TRUE)
 
 
-
-## Are there differences in activity patterns between weekdays and weekends?
-To answer this question I performed the follow steps:
-
-1. Converted the date field's format to a date format.
-2. Determined the day of the week that the date represents.
-3. Determined if the date was a weekday or weekend.
-4. Seperate the file into two file based on weekend or weekday.
-5. Calculate the mean of each file.
-6. Made a panel plot containing a time series plot of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis).
-The code to do this is:
-
-```{r}
+#--------------------------------------------------------------------------
+# Are there differences in activity patterns between weekdays and weekends?
+#--------------------------------------------------------------------------
 my.date <- as.Date(data2$date) # convert date to date format
 
 data2$day <- weekdays(my.date <- as.Date(data2$date)) # add column with the day of the week
@@ -154,4 +123,10 @@ plot(we$Group.1, we$x, type ='l',   main = "Weekends", col="Red",
      ylab = "number of steps")
 plot(wd$Group.1, wd$x, type ='l',   main = "Weekdays", col="Red", 
      xlab = "5-minute intervals", ylab = "number of steps")
-```
+
+# --- copy the plot to a PNG file
+dev.copy(device = png, filename = 'plot4.png', width = 480, height = 480)
+# --- close the PNG device
+dev.off()
+
+# --- end of my script -- 08-12-2015 -- jc Westlake1 ---
