@@ -1,7 +1,5 @@
 Reproducible Research: Peer Assessment 1
 ========================================
-```{r setoptions, echo=TRUE}
-```
 **Overview**
 
 This project analyzes personal movement data collected with personal monitoring devices like *Fitbit*.  Source data collected in five minutes intervals over a two month period was analyzed. The original data was forked from GitHub and cloned to my pc for processing.  The original data, my R programming code and results are included in this GitHub repository.
@@ -38,6 +36,7 @@ data1.sum <- aggregate(x = data[c("steps")],
 
 Next I made a histogram of the total number of steps taken each day.  The code to do this is:
 ```{r echo=TRUE}
+
 # create histogram of the total number of steps taken each day
 hist(as.numeric(data1.sum$steps), 
      main = "Total Number of Steps Taken Each Day", 

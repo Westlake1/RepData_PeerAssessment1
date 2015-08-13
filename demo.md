@@ -17,7 +17,7 @@ The result of these steps produces a file called *data* which is then processes.
 
 ```{r echo=TRUE}
 # --- set the working directory
-#setwd("c:/Users/Owner/ReproducibleResearch1/RepData_PeerAssessment1")
+setwd("c:/Users/Owner/ReproducibleResearch1/RepData_PeerAssessment1")
 
 # --- unzip the file
 unzip("c:/Users/Owner/ReproducibleResearch1/RepData_PeerAssessment1/activity.zip", files = NULL, list = FALSE, overwrite = TRUE,
