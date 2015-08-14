@@ -54,16 +54,16 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 
 <div id="reproducible-research-peer-assessment-1" class="section level1">
 <h1>Reproducible Research: Peer Assessment 1</h1>
-<pre class="r"><code># knitr::knit2html(&quot;./PA1_template.Rmd&quot;,&quot;./PA1_template.html&quot;) # run in console first
-knitr::opts_chunk$set(fig.path = 'figures/')</code></pre>
-<p><strong>Overview</strong></p>
-<p>This project analyzes personal movement data collected with personal monitoring devices like <em>Fitbit</em>. Source data collected in five minutes intervals over a two month period was analyzed. The original data was forked from GitHub and cloned to my pc for processing. The original data, my R programming code and results are included in this GitHub repository.</p>
+<pre class="r"><code>knitr::opts_chunk$set(fig.path = 'figures/')</code></pre>
+<p><strong>Overview</strong> This project analyzes personal movement data collected with personal monitoring devices like <em>Fitbit</em>. Source data collected in five minutes intervals over a two month period was analyzed. The original data was forked from GitHub and cloned to my pc for processing. The original data, my R programming code and results are included in this GitHub repository.</p>
 <div id="loading-and-preprocessing-the-data" class="section level2">
 <h2>Loading and preprocessing the data</h2>
 <p>The source data for this project is the <em>activity.zip</em> file located within the <em>RepData_Assessment1</em> folder. Three steps are required to read this file into R Studio. These steps are:</p>
 <ol style="list-style-type: decimal">
-<li>Unzip the file.</li>
-<li>Read the file into R.</li>
+<li>Set the working directory. Manually run this command in the console: setwd(“c:/Users/Owner/ReproducibleResearch1/RepData_PeerAssessment1”)</li>
+<li>Manually run this command in the console: knitr::knit2html(“./PA1_template.Rmd”,“./PA1_template.html”)</li>
+<li>Unzip the file. (see code chunk below)</li>
+<li>Read the file into R. (see code chunk below)</li>
 </ol>
 <p>The result of these steps produces a file called <em>data</em> which is then processes. The code to do this is:</p>
 <pre class="r"><code># --- unzip the file

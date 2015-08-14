@@ -2,18 +2,19 @@ Reproducible Research: Peer Assessment 1
 ========================================
 
 ```{r setoptions, echo=TRUE, results='asis'}
-# knitr::knit2html("./PA1_template.Rmd","./PA1_template.html") # run in console first
 knitr::opts_chunk$set(fig.path = 'figures/')
 ```
-**Overview**
 
+**Overview**
 This project analyzes personal movement data collected with personal monitoring devices like *Fitbit*.  Source data collected in five minutes intervals over a two month period was analyzed. The original data was forked from GitHub and cloned to my pc for processing.  The original data, my R programming code and results are included in this GitHub repository.
 
 ## Loading and preprocessing the data
 The source data for this project is the *activity.zip* file located within the *RepData_Assessment1* folder.  Three steps are required to read this file into R Studio.  These steps are:
 
-1. Unzip the file.
-2. Read the file into R.
+1. Set the working directory. Manually run this command in the console:  setwd("c:/Users/Owner/ReproducibleResearch1/RepData_PeerAssessment1")
+2. Manually run this command in the console: knitr::knit2html("./PA1_template.Rmd","./PA1_template.html")
+3. Unzip the file. (see code chunk below)
+4. Read the file into R. (see code chunk below)
 
 The result of these steps produces a file called *data* which is then processes.  The code to do this is:
 
